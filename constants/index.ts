@@ -27,3 +27,10 @@ export const defaultValueJob = {
   max_salary_offered: '0',
   is_open: true,
 } as const
+
+export const defaultValueProfile = {
+  full_name: '',
+  phone: '',
+  email: '',
+  password: '',
+}

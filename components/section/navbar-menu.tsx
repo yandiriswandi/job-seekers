@@ -21,10 +21,13 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import { useSession, signOut } from 'next-auth/react'
+import UpdateApplicantProfile from '../ProfileDrawer'
+import { useState } from 'react'
 
 export default function NavbarMenu() {
   const { data, status } = useSession()
   const dashboardUrl = data?.user.role === 'admin' ? '/dashboard' : '/applicant'
+  const [showProfileForm, setShowProfileForm] = useState(false)
 
   return (
     <header className="bg-primary text-white sticky top-0">
@@ -58,6 +61,9 @@ export default function NavbarMenu() {
               </DropdownMenuLabel>
               <DropdownMenuGroup>
                 <DropdownMenuItem>{data.user.email}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setShowProfileForm(true)}>
+                  <span>Update Profile</span>
+                </DropdownMenuItem>
                 <Link href={dashboardUrl}>
                   <DropdownMenuItem>
                     Visit Dashboard
@@ -87,6 +93,11 @@ export default function NavbarMenu() {
           </DropdownMenu>
         )}
       </div>
+      <UpdateApplicantProfile
+        open={showProfileForm}
+        onOpen={() => setShowProfileForm(false)}
+        onFinish={() => setShowProfileForm(false)}
+      />
     </header>
   )
 }
